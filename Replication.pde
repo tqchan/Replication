@@ -2,19 +2,24 @@
 int fieldX, fieldY;
 int _pointX, _pointY;
 int infiledPoint = 20;
-PImage masuImg;
+PImage masuImg, saveBtImg;
 int lineWeight = 10;
 int pMouseX, pMouseY;
 int firstTouch = 0;
 int _fieldX;
 int _fieldY;
 int _x1, _x2, _y1, _y2;
+int _btImagW;
+int _btImagH;
+int _saveX;
+int _saveY;
 
 void setup() {
 	background(0,0,0);
 	fullScreen();
 	field(width, height);
 	inField();
+	saveBt();
 }
 
 void draw() {
@@ -76,5 +81,28 @@ void keyPressed() {
 		background(0,0,0);
 		field(width, height);
 		inField();
+		saveBt();
+	}
+}
+
+void saveBt() {
+	saveBtImg = loadImage("data/save.png");
+	_btImagW = saveBtImg.width / 2;
+	_btImagH = saveBtImg.height / 2;
+	_saveX = width - _btImagW;
+	_saveY = height - _btImagH;
+	image(saveBtImg, _saveX, _saveY, _btImagW, _btImagH);
+}
+
+void mousePressed() {
+	if (mouseX > _saveX && mouseX < width && mouseY > _saveY && mouseY < height) {
+		String time = "" + year() + "_" + month() + "_" + day() + "_" + hour() + "_" + minute() + "_" + second();
+		String path = "data/screenshot/" + time + ".png";
+		save(path);
+		clear();
+		background(0,0,0);
+		field(width, height);
+		inField();
+		saveBt();
 	}
 }
