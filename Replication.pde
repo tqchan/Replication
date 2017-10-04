@@ -4,6 +4,8 @@ int _pointX, _pointY;
 int infiledPoint = 20;
 PImage masuImg;
 int lineWeight = 10;
+int pMouseX, pMouseY;
+int firstTouch = 0;
 
 void setup() {
 	background(0,0,0);
@@ -17,7 +19,17 @@ void draw() {
 	strokeWeight(lineWeight);
 	// マウスで線を描く
 	if (mousePressed) {
-		line(pmouseX, pmouseY, mouseX, mouseY);
+		if (firstTouch == 0) {
+			pMouseX = mouseX;
+			pMouseY = mouseY;
+			firstTouch ++;
+		} else {
+			pMouseX = pmouseX;
+			pMouseY = pmouseY;
+		}
+		line(mouseX, mouseY, pMouseX, pMouseY);
+	} else if (!mousePressed) {
+		firstTouch = 0;
 	}
 }
 
@@ -49,6 +61,13 @@ void inField() {
 	_x2 = _x1 + _fieldX;
 	_y1 = _pointY + infiledPoint;
 	_y2 = _y1 + _fieldY;
-	// rect(_x1, _y1, _fieldX, _fieldY);
 	image(masuImg, _x1, _y1, _fieldX, _fieldY);
+}
+
+void keyPressed() {
+	String time = "" + year() + "_" + month() + "_" + day() + "_" + hour() + "_" + minute();
+	String path = "data/screenshot/" + time + ".png";
+	if (key == ENTER) {
+		save(path);
+	}
 }

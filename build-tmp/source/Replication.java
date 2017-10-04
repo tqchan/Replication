@@ -20,6 +20,8 @@ int _pointX, _pointY;
 int infiledPoint = 20;
 PImage masuImg;
 int lineWeight = 10;
+int pMouseX, pMouseY;
+int firstTouch = 0;
 
 public void setup() {
 	background(0,0,0);
@@ -33,8 +35,17 @@ public void draw() {
 	strokeWeight(lineWeight);
 	// \u30de\u30a6\u30b9\u3067\u7dda\u3092\u63cf\u304f
 	if (mousePressed) {
-		line(mouseX, mouseY, pmouseX, pmouseY);
-		// line(pmouseX, pmouseY, mouseX, mouseY);
+		if (firstTouch == 0) {
+			pMouseX = mouseX;
+			pMouseY = mouseY;
+			firstTouch ++;
+		} else {
+			pMouseX = pmouseX;
+			pMouseY = pmouseY;
+		}
+		line(mouseX, mouseY, pMouseX, pMouseY);
+	} else if (!mousePressed) {
+		firstTouch = 0;
 	}
 }
 
@@ -66,8 +77,17 @@ public void inField() {
 	_x2 = _x1 + _fieldX;
 	_y1 = _pointY + infiledPoint;
 	_y2 = _y1 + _fieldY;
-	// rect(_x1, _y1, _fieldX, _fieldY);
 	image(masuImg, _x1, _y1, _fieldX, _fieldY);
+}
+
+public void keyPressed() {
+	// Date d = new Date();
+	// long current=d.getTime();
+	String time = "" + year() + "_" + month() + "_" + day() + "_" + hour() + "_" + minute();
+	String path = "data/screenshot/" + time + ".png";
+	if (key == ENTER) {
+		save(path);
+	}
 }
   public void settings() { 	fullScreen(); }
   static public void main(String[] passedArgs) {
