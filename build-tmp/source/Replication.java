@@ -22,6 +22,9 @@ PImage masuImg;
 int lineWeight = 10;
 int pMouseX, pMouseY;
 int firstTouch = 0;
+int _fieldX;
+int _fieldY;
+int _x1, _x2, _y1, _y2;
 
 public void setup() {
 	background(0,0,0);
@@ -65,14 +68,14 @@ public void field(int w, int y) {
 		_pointX = 0;
 	}
 	strokeWeight(0);
+	fill(255, 255, 255);
 	rect(_pointX, _pointY, fieldX, fieldY);
 }
 
 public void inField() {
 	masuImg = loadImage("data/masu.png");
-	int _fieldX = fieldX - infiledPoint*2;
-	int _fieldY = fieldY - infiledPoint*2;
-	int _x1, _x2, _y1, _y2;
+	_fieldX = fieldX - infiledPoint*2;
+	_fieldY = fieldY - infiledPoint*2;
 	_x1 = _pointX + infiledPoint;
 	_x2 = _x1 + _fieldX;
 	_y1 = _pointY + infiledPoint;
@@ -81,12 +84,14 @@ public void inField() {
 }
 
 public void keyPressed() {
-	// Date d = new Date();
-	// long current=d.getTime();
-	String time = "" + year() + "_" + month() + "_" + day() + "_" + hour() + "_" + minute();
+	String time = "" + year() + "_" + month() + "_" + day() + "_" + hour() + "_" + minute() + "_" + second();
 	String path = "data/screenshot/" + time + ".png";
 	if (key == ENTER) {
 		save(path);
+		clear();
+		background(0,0,0);
+		field(width, height);
+		inField();
 	}
 }
   public void settings() { 	fullScreen(); }
