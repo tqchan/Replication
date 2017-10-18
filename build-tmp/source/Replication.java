@@ -18,7 +18,7 @@ public class Replication extends PApplet {
 int fieldX, fieldY;
 int _pointX, _pointY;
 int infiledPoint = 20;
-PImage masuImg, saveBtImg;
+PImage masuImg, saveBtImg, clearBtImg;
 int lineWeight = 10;
 int pMouseX, pMouseY;
 int firstTouch = 0;
@@ -29,6 +29,8 @@ int _btImagW;
 int _btImagH;
 int _saveX;
 int _saveY;
+int _clearX;
+int _clearY;
 
 public void setup() {
 	background(0,0,0);
@@ -36,6 +38,7 @@ public void setup() {
 	field(width, height);
 	inField();
 	saveBt();
+	clearBt();
 }
 
 public void draw() {
@@ -98,16 +101,24 @@ public void keyPressed() {
 		field(width, height);
 		inField();
 		saveBt();
+		clearBt();
 	}
 }
 
 public void saveBt() {
-	saveBtImg = loadImage("data/save.png");
-	_btImagW = saveBtImg.width / 2;
-	_btImagH = saveBtImg.height / 2;
+	saveBtImg = loadImage("data/save2.png");
+	_btImagW = saveBtImg.width / 3;
+	_btImagH = saveBtImg.height / 3;
 	_saveX = width - _btImagW;
 	_saveY = height - _btImagH;
 	image(saveBtImg, _saveX, _saveY, _btImagW, _btImagH);
+}
+
+public void clearBt() {
+	clearBtImg = loadImage("data/keshi.png");
+	_clearX = 0;
+	_clearY = 0;
+	image(clearBtImg, _clearX, _clearY, _btImagW, _btImagH);
 }
 
 public void mousePressed() {
@@ -120,6 +131,15 @@ public void mousePressed() {
 		field(width, height);
 		inField();
 		saveBt();
+		clearBt();
+	}
+	if (mouseX > 0 && mouseX < _btImagW && mouseY > 0 && mouseY < _btImagH) {
+		clear();
+		background(0,0,0);
+		field(width, height);
+		inField();
+		saveBt();
+		clearBt();
 	}
 }
   public void settings() { 	fullScreen(); }
